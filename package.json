@@ -1,10 +1,15 @@
 {
   "name": "web3-test",
+  "author": "Prantadas7",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prantadas7/mintNft-web3"
+  },
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon test.js",
+    "start": "node index.js",
     "dev": "nodemon index.js"
   },
   "dependencies": {
