@@ -22,7 +22,6 @@ web3.defaultAccount = process.env.DEFAULT_WALLET_ADDRESS;
                     const receipt = await web3.getTransactionReceipt(transactions[j].hash);
                     if (receipt.contractAddress && receipt.contractAddress.toLowerCase() === contractAddress.toLowerCase()) {
                         txFound = true;
-                        console.log(`Contract Creator Address: ${transactions[j].from}`);
                         address = transactions[j].from;
                         break;
                     }
