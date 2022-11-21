@@ -1,12 +1,14 @@
 const Web3 = require('web3-eth');
-const web3 = new Web3('ws://localhost:7545');
+// const web3 = new Web3('ws://localhost:7545');
+const web3 = new Web3('ws://10.11.70.174:7545');
 require('dotenv').config();
 const abi = require('./abi.json');
 const contractAddress = process.env.CONTRACT_ADDRESS;
 const myContract = new web3.Contract(abi, contractAddress);
 web3.defaultAccount = process.env.DEFAULT_WALLET_ADDRESS;
 (async () => {
-    const wallet = '0xA17863802dDc5380f12073782bA109Fa8382aB43';
+    // const wallet = '0xA17863802dDc5380f12073782bA109Fa8382aB43';
+    const wallet = '0x6E84150012Fd6D571C33C266424fcDEcF80E3274';
     let address;
     // get owner of the contract
     async function getContractCreatorAddress() {
@@ -42,11 +44,10 @@ web3.defaultAccount = process.env.DEFAULT_WALLET_ADDRESS;
             // to get all the information of a transaction
             web3.getTransaction(transaction, function (error, result) {
                 console.log(result);
-                result.from === address && myContract.methods.mint().send({
+                result.from === wallet && myContract.methods.mint().send({
                     from: web3.defaultAccount,
                     gas: result.gas * 2
                 })
-
             })
         })
 
