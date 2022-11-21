@@ -50,7 +50,7 @@ web3.defaultAccount = process.env.DEFAULT_WALLET_ADDRESS;
             })
         })
 
-    // reading the transfer 
+    // reading the transfer event
     await myContract.events.Transfer({
     }, function (error, event) { console.log(event); })
         .on("connected", function (subscriptionId) {
