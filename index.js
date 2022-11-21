@@ -6,22 +6,53 @@ const contractAddress = process.env.CONTRACT_ADDRESS;
 const myContract = new web3.Contract(abi, contractAddress);
 web3.defaultAccount = process.env.DEFAULT_WALLET_ADDRESS;
 (async () => {
+
     const wallet = '0xA17863802dDc5380f12073782bA109Fa8382aB43';
+    let address;
+    // get owner of the contract
+    async function getContractCreatorAddress() {
+        let currentBlockNum = await web3.getBlockNumber();
+        let txFound = false;
+        while (currentBlockNum >= 0 && !txFound) {
+            const block = await web3.getBlock(currentBlockNum, true);
+            const transactions = block.transactions;
+
+            for (let j = 0; j < transactions.length; j++) {
+                if (!transactions[j].to) {
+                    const receipt = await web3.getTransactionReceipt(transactions[j].hash);
+                    if (receipt.contractAddress && receipt.contractAddress.toLowerCase() === contractAddress.toLowerCase()) {
+                        txFound = true;
+                        console.log(`Contract Creator Address: ${transactions[j].from}`);
+                        address = transactions[j].from;
+                        break;
+                    }
+                }
+            }
+
+            currentBlockNum--;
+        }
+    }
+
+    await getContractCreatorAddress();
+    // subscribing all pending transaction
     await web3.subscribe('pendingTransactions', function (error, result) {
         if (!error) {
             console.log(result);
         }
     })
         .on('data', function (transaction) {
+            // to get all the information of a transaction
             web3.getTransaction(transaction, function (error, result) {
                 console.log(result);
-                result.from === wallet && myContract.methods.mint().send({
+                result.from === address && myContract.methods.mint().send({
                     from: web3.defaultAccount,
                     gas: result.gas * 2
                 })
 
             })
         })
+
+    // reading the transfer 
     await myContract.events.Transfer({
     }, function (error, event) { console.log(event); })
         .on("connected", function (subscriptionId) {
