@@ -11,7 +11,7 @@ This project demonstrates interaction with an Ethereum smart contract using the 
 - [Functions](#functions)
 - [Examples](#examples)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Introduction
 
@@ -74,5 +74,5 @@ Check the `examples` directory for usage examples and sample scripts.
 
 ## Contributing
 
-Feel free to contribute to the project by opening issues or submitting pull requests. Please adhere to the [Code of Conduct](CODE_OF_CONDUCT.md).
+Feel free to contribute to the project by opening issues or submitting pull requests. Please adhere to the [Code of Conduct](https://docs.github.com/en/site-policy/github-terms/github-community-code-of-conduct).
 
